@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- This file was auto-generated from WSDL --><!-- by the Apache Axis2 version: 1.7.9  Built on : Nov 16, 2018 (12:05:37 GMT) --><serviceGroup>
+    <service name="SecureBookingService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="de.axishotels.booking.service.BookingServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">de.axishotels.booking.service.MyBookingService</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="GetHotels" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://axishotels.de/booking/service">
+            <actionMapping>http://axishotels.de/booking/service/GetHotels</actionMapping>
+            <outputActionMapping>http://axishotels.de/booking/service/BookingServiceInterface/GetHotelsResponse</outputActionMapping>
+        </operation>
+        <operation name="CreateReservation" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://axishotels.de/booking/service">
+            <actionMapping>http://axishotels.de/booking/service/CreateReservation</actionMapping>
+            <outputActionMapping>http://axishotels.de/booking/service/BookingServiceInterface/CreateReservationResponse</outputActionMapping>
+        </operation>
+
+        <!-- Enable Rampart module for WS-Security support -->
+        <module ref="rampart"/>
+        
+        <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="SignOnly">
+            <wsp:ExactlyOne>
+                <wsp:All>
+                    <sp:AsymmetricBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+                        <wsp:Policy>
+                            <sp:InitiatorToken>
+                                <wsp:Policy>
+                                    <sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+                                        <wsp:Policy>
+                  							<sp:RequireKeyIdentifierReference />
+                                            <sp:WssX509V3Token10/>
+                                        </wsp:Policy>
+                                    </sp:X509Token>
+                                </wsp:Policy>
+                            </sp:InitiatorToken>
+                            <sp:RecipientToken>
+                                <wsp:Policy>
+                                    <sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/Never">
+                                        <wsp:Policy>
+                                            <sp:WssX509V3Token10/>
+                                        </wsp:Policy>
+                                    </sp:X509Token>
+                                </wsp:Policy>
+                            </sp:RecipientToken>
+                            <sp:AlgorithmSuite>
+                                <wsp:Policy>
+                                    <sp:TripleDesRsa15/>
+                                </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                                <wsp:Policy>
+                                    <sp:Strict/>
+                                </wsp:Policy>
+                            </sp:Layout>
+                            <sp:IncludeTimestamp/>
+                            <sp:OnlySignEntireHeadersAndBody/>
+                        </wsp:Policy>
+                    </sp:AsymmetricBinding>
+                    <sp:SignedParts xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+                        <sp:Body/>
+                    </sp:SignedParts>
+                    <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                        <wsp:Policy>
+                            <sp:MustSupportRefKeyIdentifier/>
+                            <sp:MustSupportRefEmbeddedToken/>
+                        </wsp:Policy>
+                    </sp:Wss10>
+                    <ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
+				        <ramp:user>anna</ramp:user>
+						<ramp:passwordCallbackClass>de.axishotels.booking.service.MyPasswordCallbackHandler</ramp:passwordCallbackClass>
+                        <ramp:signatureCrypto>
+                            <ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
+                                <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
+                                <ramp:property name="org.apache.ws.security.crypto.merlin.file">anna.jks</ramp:property>
+                                <ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password">secret</ramp:property>
+                            </ramp:crypto>
+                        </ramp:signatureCrypto>
+                    </ramp:RampartConfig>
+                </wsp:All>
+            </wsp:ExactlyOne>
+        </wsp:Policy>
+        
+    </service>
+</serviceGroup>

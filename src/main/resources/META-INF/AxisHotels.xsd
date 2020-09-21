@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://axishotels.de/booking/types" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://axishotels.de/booking/types">
+    <complexType name="RoomType">
+        <sequence>
+            <element name="roomCode" type="string"/>
+            <element name="numberOfBeds" type="int"/>
+            <element name="price" type="float"/>
+        </sequence>
+    </complexType>
+    <complexType name="Hotel">
+        <sequence>
+            <element name="hotelCode" type="string"/>
+            <element name="hotelName" type="string"/>
+            <element name="city" type="string"/>
+            <element name="numberOfStars" type="int"/>
+            <element maxOccurs="unbounded" name="roomTypes" type="tns:RoomType"/>
+        </sequence>
+    </complexType>
+    <element name="GetHotelsRequest">
+        <complexType>
+            <sequence>
+                <element name="city" type="string"/>
+                <element name="numberOfStars" type="int"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="GetHotelsResponse">
+        <complexType>
+            <sequence>
+                <element maxOccurs="unbounded" minOccurs="0" name="hotels" type="tns:Hotel"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="Reservation">
+        <sequence>
+            <element name="hotelCode" type="string"/>
+            <element name="roomCode" type="string"/>
+            <element name="arrivalDate" type="date"/>
+            <element name="departureDate" type="date"/>
+            <element name="numberOfRooms" type="int"/>
+        </sequence>
+    </complexType>
+    <complexType name="Confirmation">
+        <sequence>
+            <element name="status" type="string"/>
+            <element name="reservationNumber" type="int"/>
+        </sequence>
+    </complexType>
+    <element name="CreateReservationRequest">
+        <complexType>
+            <sequence>
+                <element name="reservation" type="tns:Reservation"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="CreateReservationResponse">
+        <complexType>
+            <sequence>
+                <element name="confirmation" type="tns:Confirmation"/>
+            </sequence>
+        </complexType>
+    </element>
+</schema>
